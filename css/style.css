@@ -6,6 +6,10 @@
     font-family: Verdana;
     color: #333;
   }
+
+  html {
+    height: 100vh;
+  }
   
   body {
     background-image: url("../img/imagem2.jpg");
