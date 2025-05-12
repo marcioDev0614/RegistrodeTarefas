@@ -164,8 +164,13 @@ document.addEventListener("click", (e) =>{
     if(targetEl.classList.contains("finish-todo"))
     parentEl.classList.toggle("done")
 
-    if(targetEl.classList.contains("delete-todo"))
+    if(targetEl.classList.contains("delete-todo")){
         parentEl.remove()
+
+        removeTodoLocalStorage(todoTitle)
+    }
+    
+
 
     if(targetEl.classList.contains("edit-todo")){
         toggleForms();
@@ -231,6 +236,14 @@ const getTodosLocalStogare = () =>{
     return todos
 }
 
+const loadTodos = ()=>{
+    const todos = getTodosLocalStogare()
+
+    todos.forEach((todo) =>{
+        saveTodo(todo.text, todo.done, 0)
+    })
+}
+
 const saveTodoLocalStorage = (todo)=>{
 
     // Pegar todos os todos da local storage
@@ -243,3 +256,13 @@ const saveTodoLocalStorage = (todo)=>{
     localStorage.setItem("todos", JSON.stringify(todos))
 
 }
+
+const removeTodoLocalStorage = (todoText) => {
+    const todos = getTodosLocalStogare();
+
+    const filteredTodos = todos.filter((todo) => todo.text !== todoText)
+
+    localStorage.setItem("todos", JSON.stringify(filteredTodos))
+}
+
+loadTodos();
