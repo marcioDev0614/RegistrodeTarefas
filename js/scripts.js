@@ -1,0 +1,84 @@
+// Seleção de elementos
+
+// Adicionar nova tarefa
+const todoForm = document.querySelector("#todo-form");
+const todoInput = document.querySelector("#todo-input");
+
+// Listar as tarefas
+const todoList = document.querySelector("#todo-list");
+
+// Editar tarefs
+const editForm = document.querySelector("#edit-form");
+const editInput = document.querySelector("#edit-input");
+
+// Cancelar tarefa
+const cancelEditBtn = document.querySelector("#cancel-edit-btn");
+
+// Funções
+
+const saveTodo = (text)=>{
+
+    // Cria a div
+    const todo = document.createElement("div")
+    todo.classList.add("todo")
+
+    // Adiciona o h3 na div
+    const todoTitle = document.createElement("h3")
+    todoTitle.innerText = text
+    todo.appendChild(todoTitle)
+
+    // Adicionar botões em cada tarefa na lista
+    const doneBtn = document.createElement("button")
+    doneBtn.classList.add("finish-todo")
+    doneBtn.innerHTML = '<i class="fa-solid fa-check-double"></i>'
+    todo.appendChild(doneBtn)
+
+    const editBtn = document.createElement("button")
+    editBtn.classList.add("edit-todo")
+    editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>'
+    todo.appendChild(editBtn)
+
+    const deleteBtn = document.createElement("button")
+    deleteBtn.classList.add("delete-todo")
+    deleteBtn.innerHTML = ' <i class="fa-solid fa-xmark"></i>'
+    todo.appendChild(deleteBtn)
+
+    // Adiciona a tarefa completa na lista
+    todoList.appendChild(todo)
+
+    // Limpa o campo após salvar
+    todoInput.value = ''
+
+    // Dar foco ao campo input
+    todoInput.focus()
+
+
+}
+
+// Eventos
+
+todoForm.addEventListener("submit", (e)=> {
+    e.preventDefault()
+
+    const inputValue  = todoInput.value 
+    // Save input
+    if(inputValue){
+        saveTodo(inputValue)
+    }
+})
+
+
+document.addEventListener("click", (e) =>{
+    const targetEl = e.target
+    const parentEl = targetEl.closest("div")
+
+    if(targetEl.classList.contains("finish-todo"))
+    parentEl.classList.toggle("done")
+
+    if(targetEl.classList.contains("delete-todo"))
+        parentEl.remove()
+
+    if(targetEl.classList.contains("edit-todo"))
+        console.log("Editou")
+
+})
