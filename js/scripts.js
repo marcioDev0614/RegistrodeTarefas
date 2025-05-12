@@ -14,6 +14,12 @@ const editInput = document.querySelector("#edit-input");
 // Cancelar tarefa
 const cancelEditBtn = document.querySelector("#cancel-edit-btn");
 
+// Busca de tarefas
+const searchInput = document.querySelector("#search-input");
+const eraseBtn = document.querySelector("#erase-button");
+const filterBtn = document.querySelector("#filter-select");
+
+//Texto antigo no input editar
 let oldInputValue;
 
 // Funções
@@ -77,6 +83,23 @@ const updateTodo = (text) => {
 
 }
 
+const getSearchTodos = (search) =>{
+
+    const todos = document.querySelectorAll(".todo")
+
+    todos.forEach((todo) =>{
+        let todoTitle = todo.querySelector("h3").innerText.toLowerCase()
+
+        const normalizedSearch = search.toLowerCase()
+
+        todo.style.display = "flex"
+
+        if(!todoTitle.includes(normalizedSearch)){
+            todo.style.display = "none"
+        }
+    })
+}
+
 // Eventos
 
 todoForm.addEventListener("submit", (e)=> {
@@ -134,3 +157,20 @@ editForm.addEventListener("submit", (e) =>{
     toggleForms()
 })
 
+
+searchInput.addEventListener("keyup", (e)=>{
+
+    const search = e.target.value
+
+    getSearchTodos(search)
+
+})
+
+
+eraseBtn.addEventListener("click", (e) =>{
+    e.preventDefault()
+
+    searchInput.value = "";
+
+    searchInput.dispatchEvent(new Event("keyup"))
+})
